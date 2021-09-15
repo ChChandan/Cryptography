@@ -170,6 +170,27 @@ def encryption(key,plaintext):
     lastword=XOR(left,lastword)
     return lastword,right
 
+def decryption(key,ciphertext):
+    key1,key2=keygenerator(key)
+    codeword = [x for x in ciphertext]
+    #initial permutation
+    codeword=permutator(codeword, 3)
+    #First step encryption
+    firstflip,right=encryption(key2,codeword)
+    #swapping variables
+    left,right=swap(firstflip,right)
+    secondflip=left+right
+    #Second step encryption
+    secondflip,right=encryption(key1,secondflip)
+    plaintext=secondflip+right
+    #Inverse Initial permutation
+    plaintext=permutator(plaintext,6)
+    plaintext="".join(plaintext)
+    print("This is the plaintext text "+plaintext)
+
+    
+
+
 def swap(left,right):
     temp=left
     left=right
@@ -194,6 +215,10 @@ def brain(key,plaintext):
     ciphertext=permutator(ciphertext,6)
     ciphertext="".join(ciphertext)
     print("This is the cipher text "+ciphertext)
+    print("*******************************")
+    decryption(key, ciphertext)
+
+
     
 
 
