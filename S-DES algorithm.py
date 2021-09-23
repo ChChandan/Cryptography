@@ -1,22 +1,21 @@
 #Chandan Cherukuri 
-#S-DES Encryption Algorithm
+#S-DES Algorithm encyrption and decryption
 
 def permutator(key,permutationcommand):
     if(permutationcommand==1):
-        givenpermutation=[3,5,2,7,4,10,1,9,8,6]#first permutation (P-10)
+        givenpermutation=[3,5,2,7,4,10,1,9,8,6]# First permutation (P-10) (For key generation)
     elif(permutationcommand==2):
-        givenpermutation=[6,3,7,4,8,5,10,9]#second permutation (P-8)
+        givenpermutation=[6,3,7,4,8,5,10,9]# Second permutation (P-8)(For key generation)
     elif(permutationcommand==3):
-        givenpermutation=[2,6,3,1,4,8,5,7]#intial permutation
+        givenpermutation=[2,6,3,1,4,8,5,7]# Intial permutation(IP)
     elif(permutationcommand==4):
-        givenpermutation=[4,1,2,3,2,3,4,1]#expansion permutation
+        givenpermutation=[4,1,2,3,2,3,4,1]# Expansion permutation(EP)
     elif(permutationcommand==5):
         givenpermutation=[2,4,3,1]#P4 permutation
     elif(permutationcommand==6):
-        givenpermutation=[4,1,3,5,7,2,8,6]# inverse initial permutation
+        givenpermutation=[4,1,3,5,7,2,8,6]# Inverse initial permutation(IP-1)
     else:
-        exit 
-    
+        exit     
     for z in range(len(givenpermutation)):
         givenpermutation[z]=givenpermutation[z]-1#changes the permutation to match the array structure because array starts with 0
     
@@ -41,9 +40,10 @@ def leftshift(fivebitkey):#function used to perform left-shift operation
     fivebitkey.pop(0)#Removes the last element
     fivebitkey.append(tempbit)#then it inserts the last bit in the first index
     return fivebitkey#returns the key after left shift
+    
 
 
-def find( decimal_number ):#function used to convert decimal to binary
+def find(decimal_number ):#function used to convert decimal to binary
     if decimal_number == 0:
         return 0
     else:
@@ -54,23 +54,15 @@ def Sbox(s0,s1):
     #defining matrix of S0 and S1
     s0_matrix=[[1,0,3,2],[3,2,1,0],[0,2,1,3],[3,1,3,2]]
     s1_matrix=[[0,1,2,3],[2,0,1,3],[3,0,1,0],[2,1,0,3]]
-    #Taking the last and first bits to find the row and middle two bits to find column
-    s0_row=s0[0]+s0[3]
-    s0_column=s0[1]+s0[2]
 
-  
-    #converting the bits from binary to decimal
-    s0_row=int(s0_row,2)
-    s0_column=int(s0_column,2)
+    #Taking the last and first bits to find the row and middle two bits to find column
+    s0_row=int((s0[0]+s0[3]),2)
+    s0_column=int((s0[1]+s0[2]),2)  
     
     #Taking the last and first bits to find the row and middle two bits to find column
-    s1_row=s1[0]+s1[3]
-    s1_column=s1[1]+s1[2]
+    s1_row=int((s1[0]+s1[3]),2)
+    s1_column=int((s1[1]+s1[2]),2)
 
-    
-    #converting the bits from binary to decimal
-    s1_row=int(s1_row,2)
-    s1_column=int(s1_column,2)
     
     #Finding the position of S0 matrix and S1 matrix
     s0_output=s0_matrix[s0_row][s0_column]
@@ -111,8 +103,7 @@ def Sbox(s0,s1):
     return finalword
 
 def keygenerator(key):
-    key_1=[]
-    key_2=[]
+    key_1,key_2=[],[]
     print("The intial given key : "+key)
 
     codeword = [x for x in key]#the string is converted into array
@@ -123,7 +114,7 @@ def keygenerator(key):
     fivebit_2=codeword[5:10]
     #prints the keyword after permutation
     codeword="".join(codeword)
-    print("This is the key after permutation :"+codeword)
+
     #initiates the left shift operation
     leftshift_1=leftshift(fivebit_1)
     leftshift_2=leftshift(fivebit_2)
@@ -186,7 +177,7 @@ def decryption(key,ciphertext):
     #Inverse Initial permutation
     plaintext=permutator(plaintext,6)
     plaintext="".join(plaintext)
-    print("This is the plaintext text "+plaintext)
+    print("This is the plaintext text : "+plaintext)
 
     
 
@@ -203,26 +194,29 @@ def brain(key,plaintext):
     codeword = [x for x in plaintext]
     #initial permutation
     codeword=permutator(codeword, 3)
+
     #First step encryption
     firstflip,right=encryption(key1,codeword)
+
     #swapping variables
     left,right=swap(firstflip,right)
     secondflip=left+right
     #Second step encryption
     secondflip,right=encryption(key2,secondflip)
     ciphertext=secondflip+right
+
     #Inverse Initial permutation
     ciphertext=permutator(ciphertext,6)
     ciphertext="".join(ciphertext)
-    print("This is the cipher text "+ciphertext)
-    print("*******************************")
+
+    print("This is the cipher text : "+ciphertext)
+
+    print("\n-------------Decryption Process--------------\n")
     decryption(key, ciphertext)
-
-
     
-
 
     
 plaintext = "01101101"
 key="1011000100"
+print("-------------Encryption Process--------------\n")
 brain(key,plaintext)
