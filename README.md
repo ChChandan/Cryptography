@@ -1,5 +1,5 @@
 # Cryptography
-Implementation of vaarious cryptographic algorithms using python.
+Implementation of various cryptographic algorithms using python.
 Available programs :
 1) Ceaser Cipher
 2) One-time pad Cipher
