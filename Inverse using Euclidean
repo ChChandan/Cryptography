@@ -1,0 +1,32 @@
+
+#Chandan Cherukuri
+#Inverse using Euclidean  algorithm
+gcdarray=[]
+def euclidien(a,b):
+    global gcdarray
+    q=int(b/a)
+    r=b%a
+    if(r==0):
+        return (gcdarray[len(gcdarray)-1])
+        exit
+    else:
+        gcdarray.append(r)
+        euclidien(r, a)
+
+def inverse_euclidien(m,b):
+    a1,a2,a3=1,0,m
+    b1,b2,b3=0,1,b
+    while b3!=1:
+        if(b3==0):
+            a3=euclidien(m,b)
+            return a3
+        q=a3//b3
+        t1,t2,t3=(a1-q*b1),(a2-q*b2),(a3-q*b3)
+        a1,a2,a3=b1,b2,b3
+        b1,b2,b3=t1,t2,t3
+       
+    return b2
+
+a=1759
+b=550
+print(inverse_euclidien(a, b))
