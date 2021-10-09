@@ -1,3 +1,6 @@
+#Chandan Cherukuri
+#One time pad cipher 
+
 import random#random library is imported to generate the random number
 
 def onetimepadcipher(key):
